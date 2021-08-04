@@ -21,6 +21,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook\Http;
 
 /**
@@ -48,9 +49,9 @@ class GraphRawResponse
     /**
      * Creates a new GraphRawResponse entity.
      *
-     * @param string|array $headers        The headers as a raw string or array.
-     * @param string       $body           The raw response body.
-     * @param int          $httpStatusCode The HTTP response code (if sending headers as parsed array).
+     * @param string|array $headers The headers as a raw string or array.
+     * @param string $body The raw response body.
+     * @param int $httpStatusCode The HTTP response code (if sending headers as parsed array).
      */
     public function __construct($headers, $body, $httpStatusCode = null)
     {
@@ -105,8 +106,10 @@ class GraphRawResponse
     public function setHttpResponseCodeFromHeader($rawResponseHeader)
     {
         // https://tools.ietf.org/html/rfc7230#section-3.1.2
-        list($version, $status, $reason) = array_pad(explode(' ', $rawResponseHeader, 3), 3, null);
-        $this->httpResponseCode = (int) $status;
+//        list($version, $status, $reason) = array_pad(explode(' ', $rawResponseHeader, 3), 3, null);
+//        $this->httpResponseCode = (int) $status;
+        preg_match('/HTTP\/\d(?:\.\d)?\s+(\d+)\s+/', $rawResponseHeader, $match);
+        $this->httpResponseCode = (int)$match[1];
     }
 
     /**
